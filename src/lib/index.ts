@@ -1,4 +1,3 @@
-import Provider from "./provider";
-import { authSignIn } from "./api/auths";
+import { FrapyClient } from "./classes";
 
-export { Provider, authSignIn };
+export { FrapyClient };

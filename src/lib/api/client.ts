@@ -1,33 +1,51 @@
-import axios, { Axios, AxiosResponse, AxiosRequestConfig } from "axios";
+import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from "axios";
 
-const axiosClient: Axios = axios.create({
-  baseURL: process.env.REACT_APP_API,
-  responseType: "json",
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+declare module "axios" {
+  interface AxiosResponse<T = any> extends Promise<T> {}
+}
 
-axiosClient.interceptors.response.use((response: AxiosResponse) => {
-  const { headers } = response;
-  const accessToken: string | undefined = headers["access-token"];
+export abstract class HttpClient {
+  protected readonly instance: AxiosInstance;
 
-  if (accessToken) {
-    localStorage.setItem("access-token", accessToken);
+  public constructor(url: string) {
+    this.instance = axios.create({
+      baseURL: url,
+      responseType: "json",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    this._initializeResponseInterceptor();
   }
 
-  return response;
-});
+  private _initializeResponseInterceptor = () => {
+    this.instance.interceptors.response.use((response: AxiosResponse) => {
+      const { headers } = response;
+      const accessToken: string | undefined = headers["access-token"];
 
-axiosClient.interceptors.request.use((requestConfig: AxiosRequestConfig) => {
-  const accessToken: string | null = localStorage.getItem("access-token");
+      if (accessToken) {
+        localStorage.setItem("access-token", accessToken);
+      }
 
-  if (accessToken && requestConfig.headers) {
-    const bearerToken = `Bearer ${accessToken}`;
-    requestConfig.headers["authorization"] = bearerToken;
-  }
+      return response;
+    });
 
-  return requestConfig;
-});
+    this.instance.interceptors.request.use(
+      (requestConfig: AxiosRequestConfig) => {
+        const accessToken: string | null = localStorage.getItem("access-token");
 
-export default axiosClient;
+        if (accessToken && requestConfig.headers) {
+          const bearerToken = `Bearer ${accessToken}`;
+          requestConfig.headers["authorization"] = bearerToken;
+        }
+
+        return requestConfig;
+      }
+    );
+  };
+
+  private _handleResponse = ({ data }: AxiosResponse) => data;
+
+  protected _handleError = (error: any) => Promise.reject(error);
+}

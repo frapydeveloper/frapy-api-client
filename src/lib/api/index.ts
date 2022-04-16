@@ -1,3 +1,4 @@
-export { default as apiClient } from "./client";
+export { HttpClient as apiClient } from "./client";
 
-export * from "./auths";
+export * from "./auth";
+export * from "./user";
