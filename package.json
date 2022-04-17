@@ -1,6 +1,6 @@
 {
   "name": "@frapy/api-client",
-  "version": "0.1.29",
+  "version": "0.2.6",
   "description": "Frapy API Client",
   "author": "Frapy",
   "keywords": [

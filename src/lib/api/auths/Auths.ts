@@ -1,8 +1,8 @@
 import { HttpClient } from "../client";
 
-import { AuthRto } from "@models/auth/authRto.model";
-import { AuthRtoList } from "@models/auth/authRtoList.model";
-import { AuthSignInDto } from "@models/auth/authSignInDto.model";
+import { AuthRto } from "@models/auths/authRto.model";
+import { AuthRtoList } from "@models/auths/authRtoList.model";
+import { AuthSignInDto } from "@models/auths/authSignInDto.model";
 
 import type {
   ApiActionParams,

@@ -1,3 +1,3 @@
-import { FrapyClient } from "./classes";
+import { FrapyClient } from "./frapyClient";
 
 export { FrapyClient };

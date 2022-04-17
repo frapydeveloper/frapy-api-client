@@ -1,6 +1,6 @@
 import { EntityModelBase } from "../entityModelBase";
 
-import { Auth } from "../auth/auth.model";
+import { Auth } from "../auths/auth.model";
 import { Role } from "../role/role.model";
 
 export class User extends EntityModelBase {
@@ -11,7 +11,6 @@ export class User extends EntityModelBase {
   public readonly auths?: Auth[];
   public readonly role?: Role;
   public readonly roleId?: string;
-  //public readonly customer?: Customer;
   public readonly isAdmin!: boolean;
   public readonly isMaster!: boolean;
   public readonly email!: string;

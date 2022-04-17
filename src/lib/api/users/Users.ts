@@ -2,7 +2,7 @@ import { HttpClient } from "../client";
 
 import { UserRto } from "../../models/user/userRto.model";
 
-export class FrapyUser extends HttpClient {
+export class Users extends HttpClient {
   public constructor(url: string) {
     super(url);
   }
